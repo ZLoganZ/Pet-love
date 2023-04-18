@@ -23,18 +23,24 @@ public class TaiKhoanController {
     }
 
     @GetMapping("/taikhoan/{id}")
-    public Optional<TaiKhoan> getTaiKhoanById(String id){
+    public Optional<TaiKhoan> getTaiKhoanById(@PathVariable String id){
         return taiKhoanRepository.findById(id);
     }
 
     @PostMapping("/taikhoan")
-    public TaiKhoan createTaiKhoan(TaiKhoan taiKhoan){
+    public TaiKhoan createTaiKhoan(@RequestBody TaiKhoan taiKhoan){
+        // check if email is existed
+        if(taiKhoanRepository.findByEmail(taiKhoan.getEmail()) != null){
+            return null;
+        }
         return taiKhoanRepository.save(taiKhoan);
     }
 
     @PutMapping("/taikhoan/{id}")
-    public TaiKhoan updateTaiKhoan(TaiKhoan taiKhoan){
-        return taiKhoanRepository.save(taiKhoan);
+    public TaiKhoan updateTaiKhoan(@RequestBody TaiKhoan taiKhoan, @PathVariable String id){
+        TaiKhoan taiKhoan1 = taiKhoanRepository.findById(id).get();
+        taiKhoan1.setInfo(taiKhoan);
+        return taiKhoanRepository.save(taiKhoan1);
     }
 
     @DeleteMapping("/taikhoan/{id}")

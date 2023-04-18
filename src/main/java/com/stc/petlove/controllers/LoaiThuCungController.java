@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @RestController
@@ -24,22 +25,28 @@ public class LoaiThuCungController {
     }
 
     @GetMapping("/loaithucung/{id}")
-    public Optional<LoaiThuCung> getLoaiThuCungById(String id){
+    public Optional<LoaiThuCung> getLoaiThuCungById(@PathVariable String id){
         return loaiThuCungRepository.findById(id);
     }
 
     @PostMapping("/loaithucung")
-    public LoaiThuCung createLoaiThuCung(LoaiThuCung loaiThuCung){
+    public LoaiThuCung createLoaiThuCung(@RequestBody LoaiThuCung loaiThuCung){
+        // Check maLoaiThuCung is existed
+        if (!loaiThuCungRepository.findByTenLoaiThuCung(loaiThuCung.getTenLoaiThuCung()).isEmpty()){
+            return null;
+        }
         return loaiThuCungRepository.save(loaiThuCung);
     }
 
     @PutMapping("/loaithucung/{id}")
-    public LoaiThuCung updateLoaiThuCung(LoaiThuCung loaiThuCung){
-        return loaiThuCungRepository.save(loaiThuCung);
+    public LoaiThuCung updateLoaiThuCung(@RequestBody LoaiThuCung loaiThuCung, @PathVariable String id){
+        LoaiThuCung loaiThuCung1 = loaiThuCungRepository.findById(id).get();
+        loaiThuCung1.setInfo(loaiThuCung);
+        return loaiThuCungRepository.save(loaiThuCung1);
     }
 
     @DeleteMapping("/loaithucung/{id}")
-    public void deleteLoaiThuCung(String id){
+    public void deleteLoaiThuCung(@PathVariable String id){
         loaiThuCungRepository.deleteById(id);
     }
 }

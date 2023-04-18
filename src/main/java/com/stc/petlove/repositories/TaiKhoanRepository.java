@@ -6,5 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TaiKhoanRepository extends MongoRepository<TaiKhoan, String> {
+    TaiKhoan findByEmail(String email);
     // CRUD methods
 }

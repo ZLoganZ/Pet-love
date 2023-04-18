@@ -23,22 +23,28 @@ public class DichVuController {
     }
 
     @GetMapping("/dichvu/{id}")
-    public Optional<DichVu> getDichVuById(String id){
+    public Optional<DichVu> getDichVuById(@PathVariable String id){
         return dichVuRepository.findById(id);
     }
 
     @PostMapping("/dichvu")
-    public DichVu createDichVu(DichVu dichVu){
+    public DichVu createDichVu(@RequestBody DichVu dichVu){
+        // check if maDicVu is existed
+        if(dichVuRepository.findByMaDichVu(dichVu.getMaDichVu()) != null){
+            return null;
+        }
         return dichVuRepository.save(dichVu);
     }
 
     @PutMapping("/dichvu/{id}")
-    public DichVu updateDichVu(DichVu dichVu){
-        return dichVuRepository.save(dichVu);
+    public DichVu updateDichVu(@RequestBody DichVu dichVu, @PathVariable String id){
+        DichVu dichVu1 = dichVuRepository.findById(id).get();
+        dichVu1.setInfo(dichVu);
+        return dichVuRepository.save(dichVu1);
     }
 
     @DeleteMapping("/dichvu/{id}")
-    public void deleteDichVu(String id){
+    public void deleteDichVu(@PathVariable String id){
         dichVuRepository.deleteById(id);
     }
 }

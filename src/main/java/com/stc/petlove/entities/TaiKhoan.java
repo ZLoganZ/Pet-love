@@ -47,4 +47,12 @@ public class TaiKhoan {
         this.password = password;
         this.roles = roles;
     }
+
+    public void setInfo(TaiKhoan taiKhoan) {
+        this.name = taiKhoan.getName();
+        this.email = taiKhoan.getEmail();
+        this.password = taiKhoan.getPassword();
+        this.dienThoai = taiKhoan.getDienThoai();
+        this.roles = taiKhoan.getRoles();
+    }
 }

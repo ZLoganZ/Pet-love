@@ -40,4 +40,11 @@ public class DichVu {
     private List<GiaDichVu> giaDichVus = new ArrayList<>();
 
     private boolean trangThai = true;
+
+    public void setInfo(DichVu dichVu) {
+        this.maDichVu = dichVu.getMaDichVu();
+        this.tenDichVu = dichVu.getTenDichVu();
+        this.noiDung = dichVu.getNoiDung();
+        this.giaDichVus = dichVu.getGiaDichVus();
+    }
 }

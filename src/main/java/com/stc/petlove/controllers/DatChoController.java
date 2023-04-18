@@ -24,22 +24,24 @@ public class DatChoController {
     }
 
     @GetMapping("/datcho/{id}")
-    public Optional<DatCho> getDatChoById(String id){
+    public Optional<DatCho> getDatChoById(@PathVariable String id){
         return datChoRepository.findById(id);
     }
 
     @PostMapping("/datcho")
-    public DatCho createDatCho(DatCho datCho){
+    public DatCho createDatCho(@RequestBody DatCho datCho){
         return datChoRepository.save(datCho);
     }
 
     @PutMapping("/datcho/{id}")
-    public DatCho updateDatCho(DatCho datCho){
-        return datChoRepository.save(datCho);
+    public DatCho updateDatCho(@RequestBody DatCho datCho, @PathVariable String id){
+        DatCho datCho1 = datChoRepository.findById(id).get();
+        datCho1.setInfo(datCho);
+        return datChoRepository.save(datCho1);
     }
 
     @DeleteMapping("/datcho/{id}")
-    public void deleteDatCho(String id){
+    public void deleteDatCho(@PathVariable String id){
         datChoRepository.deleteById(id);
     }
 }
