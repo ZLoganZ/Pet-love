@@ -36,7 +36,7 @@ public class DichVu {
     private String noiDung;
 
     // Giá dịch vụ phụ thuộc vào loại thú cưng và cân nặng của thú cưng
-    private List<GiaDichVu> giaDichVus = new ArrayList<>();
+    private List<GiaDichVu> giaDichVu = new ArrayList<>();
 
     private boolean trangThai = true;
 }

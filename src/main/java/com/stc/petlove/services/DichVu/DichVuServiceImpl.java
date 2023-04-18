@@ -47,7 +47,7 @@ public class DichVuServiceImpl implements DichVuService{
         dichVu.setMaDichVu(DTO.getMaDichVu().trim());
         dichVu.setTenDichVu(DTO.getTenDichVu().trim());
         dichVu.setNoiDung(DTO.getNoiDung());
-        dichVu.setGiaDichVus(DTO.getGiaDichVu());
+        dichVu.setGiaDichVu(DTO.getGiaDichVu());
         dichVuRepository.save(dichVu);
         return dichVu;
     }
@@ -73,7 +73,7 @@ public class DichVuServiceImpl implements DichVuService{
         dichVu.setMaDichVu(DTO.getMaDichVu().trim());
         dichVu.setTenDichVu(DTO.getTenDichVu().trim());
         dichVu.setNoiDung(DTO.getNoiDung());
-        dichVu.setGiaDichVus(DTO.getGiaDichVu());
+        dichVu.setGiaDichVu(DTO.getGiaDichVu());
         dichVuRepository.save(dichVu);
         return dichVu;
     }
