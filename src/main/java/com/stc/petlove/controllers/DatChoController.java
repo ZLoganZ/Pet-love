@@ -1,47 +1,46 @@
 package com.stc.petlove.controllers;
 
 import com.stc.petlove.entities.DatCho;
-import com.stc.petlove.repositories.DatChoRepository;
+import com.stc.petlove.dtos.DatChoDTO;
+import com.stc.petlove.services.DatCho.DatChoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Optional;
 
 
 @RestController
+@RequestMapping("/api")
 public class DatChoController {
-    private final DatChoRepository datChoRepository;
+    private final DatChoService datChoService;
 
-    @Autowired
-    public DatChoController(DatChoRepository datChoRepository) {
-        this.datChoRepository = datChoRepository;
-    }
+        @Autowired
+        public DatChoController(DatChoService datChoService) {
+            this.datChoService = datChoService;
+        }
 
-    @GetMapping("/datcho")
-    public List<DatCho> getAllDatCho(){
-        return datChoRepository.findAll();
-    }
+        @GetMapping("/datcho/{id}")
+        public ResponseEntity<DatCho> getDatCho(@PathVariable String id){
+            return new ResponseEntity<>(datChoService.getDatCho(id), HttpStatus.OK);
+        }
 
-    @GetMapping("/datcho/{id}")
-    public Optional<DatCho> getDatChoById(@PathVariable String id){
-        return datChoRepository.findById(id);
-    }
+        @GetMapping("/datcho")
+        public ResponseEntity<Iterable<DatCho>> getAllDatCho(){
+            return new ResponseEntity<>(datChoService.getAllDatCho(), HttpStatus.OK);
+        }
 
-    @PostMapping("/datcho")
-    public DatCho createDatCho(@RequestBody DatCho datCho){
-        return datChoRepository.save(datCho);
-    }
+        @PostMapping("/datcho")
+        public ResponseEntity<DatCho> create(@RequestBody DatChoDTO DTO){
+            return new ResponseEntity<>(datChoService.create(DTO), HttpStatus.OK);
+        }
 
-    @PutMapping("/datcho/{id}")
-    public DatCho updateDatCho(@RequestBody DatCho datCho, @PathVariable String id){
-        DatCho datCho1 = datChoRepository.findById(id).get();
-        datCho1.setInfo(datCho);
-        return datChoRepository.save(datCho1);
-    }
+        @PutMapping("/datcho/{id}")
+        public ResponseEntity<DatCho> update(@PathVariable String id, @RequestBody DatChoDTO DTO){
+            return new ResponseEntity<>(datChoService.update(id,DTO), HttpStatus.OK);
+        }
 
-    @DeleteMapping("/datcho/{id}")
-    public void deleteDatCho(@PathVariable String id){
-        datChoRepository.deleteById(id);
-    }
+        @DeleteMapping("/datcho/{id}")
+        public ResponseEntity<DatCho> delete(@PathVariable String id){
+            return new ResponseEntity<>(datChoService.delete(id), HttpStatus.OK);
+        }
 }

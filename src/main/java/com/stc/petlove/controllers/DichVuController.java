@@ -1,50 +1,46 @@
 package com.stc.petlove.controllers;
 
 import com.stc.petlove.entities.DichVu;
-import com.stc.petlove.repositories.DichVuRepository;
+import com.stc.petlove.dtos.DichVuDTO;
+import com.stc.petlove.services.DichVu.DichVuService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Optional;
 
 @RestController
+@RequestMapping("/api")
 public class DichVuController {
-    private final DichVuRepository dichVuRepository;
+    private final DichVuService dichVuService;
 
     @Autowired
-    public DichVuController(DichVuRepository dichVuRepository) {
-        this.dichVuRepository = dichVuRepository;
-    }
-
-    @GetMapping("/dichvu")
-    public List<DichVu> getAllDichVu(){
-        return dichVuRepository.findAll();
+    public DichVuController(DichVuService dichVuService) {
+        this.dichVuService = dichVuService;
     }
 
     @GetMapping("/dichvu/{id}")
-    public Optional<DichVu> getDichVuById(@PathVariable String id){
-        return dichVuRepository.findById(id);
+    public ResponseEntity<DichVu> getDichVu(@PathVariable String id){
+        return new ResponseEntity<>(dichVuService.getDichVu(id), HttpStatus.OK);
+    }
+
+    @GetMapping("/dichvu")
+    public ResponseEntity<Iterable<DichVu>> getAllDichVu(){
+        return new ResponseEntity<>(dichVuService.getAllDichVu(), HttpStatus.OK);
     }
 
     @PostMapping("/dichvu")
-    public DichVu createDichVu(@RequestBody DichVu dichVu){
-        // check if maDicVu is existed
-        if(dichVuRepository.findByMaDichVu(dichVu.getMaDichVu()) != null){
-            return null;
-        }
-        return dichVuRepository.save(dichVu);
+    public ResponseEntity<DichVu> create(@RequestBody DichVuDTO DTO){
+        return new ResponseEntity<>(dichVuService.create(DTO), HttpStatus.OK);
     }
 
     @PutMapping("/dichvu/{id}")
-    public DichVu updateDichVu(@RequestBody DichVu dichVu, @PathVariable String id){
-        DichVu dichVu1 = dichVuRepository.findById(id).get();
-        dichVu1.setInfo(dichVu);
-        return dichVuRepository.save(dichVu1);
+    public ResponseEntity<DichVu> update(@PathVariable String id, @RequestBody DichVuDTO DTO){
+        return new ResponseEntity<>(dichVuService.update(id,DTO), HttpStatus.OK);
     }
 
     @DeleteMapping("/dichvu/{id}")
-    public void deleteDichVu(@PathVariable String id){
-        dichVuRepository.deleteById(id);
+    public ResponseEntity<DichVu> delete(@PathVariable String id){
+        return new ResponseEntity<>(dichVuService.delete(id), HttpStatus.OK);
     }
 }

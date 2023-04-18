@@ -2,51 +2,46 @@ package com.stc.petlove.controllers;
 
 
 import com.stc.petlove.entities.LoaiThuCung;
-import com.stc.petlove.repositories.LoaiThuCungRepository;
+import com.stc.petlove.dtos.LoaiThuCungDTO;
+import com.stc.petlove.services.LoaiThuCung.LoaiThuCungService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 
 @RestController
+@RequestMapping("/api")
 public class LoaiThuCungController {
-    private final LoaiThuCungRepository loaiThuCungRepository;
+    private final LoaiThuCungService loaiThuCungService;
 
     @Autowired
-    public LoaiThuCungController(LoaiThuCungRepository loaiThuCungRepository) {
-        this.loaiThuCungRepository = loaiThuCungRepository;
-    }
-
-    @GetMapping("/loaithucung")
-    public List<LoaiThuCung> getAllLoaiThuCung(){
-        return loaiThuCungRepository.findAll();
+    public LoaiThuCungController(LoaiThuCungService loaiThuCungService) {
+        this.loaiThuCungService = loaiThuCungService;
     }
 
     @GetMapping("/loaithucung/{id}")
-    public Optional<LoaiThuCung> getLoaiThuCungById(@PathVariable String id){
-        return loaiThuCungRepository.findById(id);
+    public ResponseEntity<LoaiThuCung> getLoaiThuCung(@PathVariable String id){
+        return new ResponseEntity<>(loaiThuCungService.getLoaiThuCung(id), HttpStatus.OK);
+    }
+
+    @GetMapping("/loaithucung")
+    public ResponseEntity<Iterable<LoaiThuCung>> getAllLoaiThuCung(){
+        return new ResponseEntity<>(loaiThuCungService.getAllLoaiThuCung(), HttpStatus.OK);
     }
 
     @PostMapping("/loaithucung")
-    public LoaiThuCung createLoaiThuCung(@RequestBody LoaiThuCung loaiThuCung){
-        // Check maLoaiThuCung is existed
-        if (!loaiThuCungRepository.findByTenLoaiThuCung(loaiThuCung.getTenLoaiThuCung()).isEmpty()){
-            return null;
-        }
-        return loaiThuCungRepository.save(loaiThuCung);
+    public ResponseEntity<LoaiThuCung> create(@RequestBody LoaiThuCungDTO DTO){
+        return new ResponseEntity<>(loaiThuCungService.createLoaiThuCung(DTO), HttpStatus.OK);
     }
 
     @PutMapping("/loaithucung/{id}")
-    public LoaiThuCung updateLoaiThuCung(@RequestBody LoaiThuCung loaiThuCung, @PathVariable String id){
-        LoaiThuCung loaiThuCung1 = loaiThuCungRepository.findById(id).get();
-        loaiThuCung1.setInfo(loaiThuCung);
-        return loaiThuCungRepository.save(loaiThuCung1);
+    public ResponseEntity<LoaiThuCung> update(@PathVariable String id, @RequestBody LoaiThuCungDTO DTO){
+        return new ResponseEntity<>(loaiThuCungService.updateLoaiThuCung(id,DTO), HttpStatus.OK);
     }
 
     @DeleteMapping("/loaithucung/{id}")
-    public void deleteLoaiThuCung(@PathVariable String id){
-        loaiThuCungRepository.deleteById(id);
+    public ResponseEntity<LoaiThuCung> delete(@PathVariable String id){
+        return new ResponseEntity<>(loaiThuCungService.deleteLoaiThuCung(id), HttpStatus.OK);
     }
 }

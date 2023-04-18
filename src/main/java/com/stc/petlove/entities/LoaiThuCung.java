@@ -29,8 +29,4 @@ public class LoaiThuCung {
     private String tenLoaiThuCung;
 
     private boolean trangThai = true;
-
-    public void setInfo(LoaiThuCung loaiThuCung) {
-        this.tenLoaiThuCung = loaiThuCung.getTenLoaiThuCung();
-    }
 }

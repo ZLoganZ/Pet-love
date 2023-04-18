@@ -26,7 +26,8 @@ public class PetLoveApplication implements CommandLineRunner {
     public void run(String... args) throws Exception {
         if (taiKhoanRepository.count() == 0) {
             TaiKhoan taiKhoan = new TaiKhoan("LoganZ", "ln26805@gmail.com", "123456",
-                    Collections.singletonList("ROLE_ADMIN"));
+                    "0123456789", Collections.singletonList("ROLE_ADMIN"));
+
             taiKhoanRepository.save(taiKhoan);
         }
     }

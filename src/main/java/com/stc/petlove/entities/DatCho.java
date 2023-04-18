@@ -43,12 +43,4 @@ public class DatCho {
     private String trangThaiDatCho;
 
     private boolean trangThai = true;
-
-    public void setInfo(DatCho datCho){
-        this.email = datCho.getEmail();
-        this.thongTinDatCho = datCho.getThongTinDatCho();
-        this.thoiGian = datCho.getThoiGian();
-        this.canDan = datCho.getCanDan();
-        this.trangThaiDatCho = datCho.getTrangThaiDatCho();
-    }
 }

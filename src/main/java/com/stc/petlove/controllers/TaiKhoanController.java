@@ -1,50 +1,45 @@
 package com.stc.petlove.controllers;
 
 import com.stc.petlove.entities.TaiKhoan;
-import com.stc.petlove.repositories.TaiKhoanRepository;
+import com.stc.petlove.dtos.TaiKhoanDTO;
+import com.stc.petlove.services.TaiKhoan.TaiKhoanService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Optional;
-
 @RestController
+@RequestMapping("/api")
 public class TaiKhoanController {
-    private final TaiKhoanRepository taiKhoanRepository;
+    private final TaiKhoanService taiKhoanService;
 
     @Autowired
-    public TaiKhoanController(TaiKhoanRepository taiKhoanRepository) {
-        this.taiKhoanRepository = taiKhoanRepository;
-    }
-
-    @GetMapping("/taikhoan")
-    public List<TaiKhoan> getAllTaiKhoan(){
-        return taiKhoanRepository.findAll();
+    public TaiKhoanController(TaiKhoanService taiKhoanService) {
+        this.taiKhoanService = taiKhoanService;
     }
 
     @GetMapping("/taikhoan/{id}")
-    public Optional<TaiKhoan> getTaiKhoanById(@PathVariable String id){
-        return taiKhoanRepository.findById(id);
+    public ResponseEntity<TaiKhoan> getTaiKhoan(@PathVariable String id){
+        return new ResponseEntity<>(taiKhoanService.getTaiKhoan(id), HttpStatus.OK);
+    }
+
+    @GetMapping("/taikhoan")
+    public ResponseEntity<Iterable<TaiKhoan>> getAllTaiKhoan(){
+        return new ResponseEntity<>(taiKhoanService.getAllTaiKhoan(), HttpStatus.OK);
     }
 
     @PostMapping("/taikhoan")
-    public TaiKhoan createTaiKhoan(@RequestBody TaiKhoan taiKhoan){
-        // check if email is existed
-        if(taiKhoanRepository.findByEmail(taiKhoan.getEmail()) != null){
-            return null;
-        }
-        return taiKhoanRepository.save(taiKhoan);
+    public ResponseEntity<TaiKhoan> create(@RequestBody TaiKhoanDTO DTO){
+        return new ResponseEntity<>(taiKhoanService.create(DTO), HttpStatus.OK);
     }
 
     @PutMapping("/taikhoan/{id}")
-    public TaiKhoan updateTaiKhoan(@RequestBody TaiKhoan taiKhoan, @PathVariable String id){
-        TaiKhoan taiKhoan1 = taiKhoanRepository.findById(id).get();
-        taiKhoan1.setInfo(taiKhoan);
-        return taiKhoanRepository.save(taiKhoan1);
+    public ResponseEntity<TaiKhoan> update(@PathVariable String id, @RequestBody TaiKhoanDTO DTO){
+        return new ResponseEntity<>(taiKhoanService.update(id,DTO), HttpStatus.OK);
     }
 
     @DeleteMapping("/taikhoan/{id}")
-    public void deleteTaiKhoan(String id){
-        taiKhoanRepository.deleteById(id);
+    public ResponseEntity<TaiKhoan> delete(@PathVariable String id){
+        return new ResponseEntity<>(taiKhoanService.delete(id), HttpStatus.OK);
     }
 }
