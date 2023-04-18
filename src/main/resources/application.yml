@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: pet-love
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017
+      database: pet-love
+  security:
+    user:
+      name: admin
+      password: admin
+
+
+
+server:
+  port: 8080
