@@ -7,8 +7,8 @@ import java.util.List;
 
 public interface DatChoService {
     DatCho getDatCho(String id);
+    List<DatCho> getAllDatCho();
     DatCho create(DatChoDTO DTO);
     DatCho update(String id, DatChoDTO DTO);
     DatCho delete(String id);
-    List<DatCho> getAllDatCho();
 }

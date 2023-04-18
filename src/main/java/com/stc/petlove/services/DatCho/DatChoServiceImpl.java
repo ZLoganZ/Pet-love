@@ -26,6 +26,11 @@ public class DatChoServiceImpl implements DatChoService{
     }
 
     @Override
+    public List<DatCho> getAllDatCho(){
+        return datChoRepository.findAll();
+    }
+
+    @Override
     public DatCho create(DatChoDTO DTO) {
         if(ObjectUtils.isEmpty(DTO.getEmail())){
             throw new InvalidException("Email không được bỏ trống");
@@ -85,10 +90,5 @@ public class DatChoServiceImpl implements DatChoService{
         DatCho datCho = getDatCho(id);
         datChoRepository.delete(datCho);
         return null;
-    }
-
-    @Override
-    public List<DatCho> getAllDatCho(){
-        return datChoRepository.findAll();
     }
 }

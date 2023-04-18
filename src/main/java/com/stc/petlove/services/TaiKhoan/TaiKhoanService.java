@@ -7,8 +7,8 @@ import java.util.List;
 
 public interface TaiKhoanService {
     TaiKhoan getTaiKhoan(String id);
+    List<TaiKhoan> getAllTaiKhoan();
     TaiKhoan create(TaiKhoanDTO DTO);
     TaiKhoan update(String id,TaiKhoanDTO DTO);
     TaiKhoan delete(String id);
-    List<TaiKhoan> getAllTaiKhoan();
 }

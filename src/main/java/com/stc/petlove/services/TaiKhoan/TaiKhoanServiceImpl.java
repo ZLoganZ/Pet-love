@@ -27,6 +27,11 @@ public class TaiKhoanServiceImpl implements TaiKhoanService{
     }
 
     @Override
+    public List<TaiKhoan> getAllTaiKhoan() {
+        return taiKhoanRepository.findAll();
+    }
+
+    @Override
     public TaiKhoan create(TaiKhoanDTO DTO) {
 
         if(ObjectUtils.isEmpty(DTO.getName())){
@@ -92,10 +97,5 @@ public class TaiKhoanServiceImpl implements TaiKhoanService{
         TaiKhoan taiKhoan = getTaiKhoan(id);
         taiKhoanRepository.delete(taiKhoan);
         return null;
-    }
-
-    @Override
-    public List<TaiKhoan> getAllTaiKhoan() {
-        return taiKhoanRepository.findAll();
     }
 }

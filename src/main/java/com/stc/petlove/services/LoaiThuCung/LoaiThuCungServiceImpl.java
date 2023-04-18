@@ -27,6 +27,11 @@ public class LoaiThuCungServiceImpl implements LoaiThuCungService{
     }
 
     @Override
+    public List<LoaiThuCung> getAllLoaiThuCung() {
+        return loaiThuCungRepository.findAll();
+    }
+
+    @Override
     public LoaiThuCung createLoaiThuCung(LoaiThuCungDTO DTO) {
         if (ObjectUtils.isEmpty(DTO.getMaLoaiThuCung())){
             throw new InvalidException("Mã loại không được bỏ trống");
@@ -68,11 +73,6 @@ public class LoaiThuCungServiceImpl implements LoaiThuCungService{
         LoaiThuCung loaiThuCung = getLoaiThuCung(id);
         loaiThuCungRepository.delete(loaiThuCung);
         return null;
-    }
-
-    @Override
-    public List<LoaiThuCung> getAllLoaiThuCung() {
-        return loaiThuCungRepository.findAll();
     }
 
 }

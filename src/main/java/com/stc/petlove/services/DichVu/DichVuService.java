@@ -8,8 +8,8 @@ import java.util.List;
 
 public interface DichVuService {
     DichVu getDichVu(String id);
+    List<DichVu> getAllDichVu();
     DichVu create(DichVuDTO DTO);
     DichVu update(String id, DichVuDTO DTO);
     DichVu delete(String id);
-    List<DichVu> getAllDichVu();
 }

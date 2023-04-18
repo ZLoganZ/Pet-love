@@ -27,6 +27,11 @@ public class DichVuServiceImpl implements DichVuService{
     }
 
     @Override
+    public List<DichVu> getAllDichVu() {
+        return dichVuRepository.findAll();
+    }
+
+    @Override
     public DichVu create(DichVuDTO DTO) {
         if (ObjectUtils.isEmpty(DTO.getMaDichVu())){
             throw new InvalidException("Mã dịch vụ không được để trống");
@@ -83,10 +88,5 @@ public class DichVuServiceImpl implements DichVuService{
         DichVu dichVu = getDichVu(id);
         dichVuRepository.delete(dichVu);
         return dichVu;
-    }
-
-    @Override
-    public List<DichVu> getAllDichVu() {
-        return dichVuRepository.findAll();
     }
 }
