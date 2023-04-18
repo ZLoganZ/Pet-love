@@ -5,6 +5,7 @@ import com.stc.petlove.entities.LoaiThuCung;
 import com.stc.petlove.exceptions.InvalidException;
 import com.stc.petlove.exceptions.NotFoundException;
 import com.stc.petlove.repositories.LoaiThuCungRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
@@ -15,6 +16,7 @@ public class LoaiThuCungServiceImpl implements LoaiThuCungService{
 
     public final LoaiThuCungRepository loaiThuCungRepository;
 
+    @Autowired
     public LoaiThuCungServiceImpl(LoaiThuCungRepository loaiThuCungRepository) {
         this.loaiThuCungRepository = loaiThuCungRepository;
     }
